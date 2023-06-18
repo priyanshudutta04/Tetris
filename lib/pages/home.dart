@@ -33,6 +33,7 @@ class _HomePageState extends State<HomePage> {
   double value=0;
   int row=10;
   int col=15;
+  int score=0;
 
   Piece currentPiece=Piece(type: Tetromino.TTT);
 
@@ -90,9 +91,9 @@ class _HomePageState extends State<HomePage> {
       
       actions: [
         TextButton(onPressed: (){
+            score=0;
             Navigator.pop(context);
             resetGame();
-            
           }, 
           child: Text("Play Again")
         )
@@ -140,6 +141,7 @@ class _HomePageState extends State<HomePage> {
           gameBoard[currow][curcol]=currentPiece.type;
         }
       }
+      score+=4;
       newPiece();
     }
   }
@@ -194,16 +196,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
 
-    //double height = MediaQuery.of(context).size.height;
-    //double width = MediaQuery.of(context).size.width;
-    return Scaffold(
-     
-      //floatingActionButton: FloatingActionButton(
-       // onPressed: (){},
-        //child: Icon(Icons.message,color: Color.fromARGB(255, 235, 227, 227),),
-       // backgroundColor: Color.fromARGB(255, 24, 76, 248),
-      //),
 
+    return Scaffold(
+         
       // Using Stack for two fold animation. dont Add Expand
       body: Stack(
         children: [
@@ -262,19 +257,61 @@ class _HomePageState extends State<HomePage> {
                                             )
                                         ),
                                       ),
+
                                       Row(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children:  [      
                                           Text(
-                                            "Tetris",
+                                            "T",
                                             style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 28,
+                                              color: Colors.cyan,
+                                              fontSize: 32,
+                                              fontWeight: FontWeight.bold
+                                            ),
+                                          ),
+                                          Text(
+                                            "e",
+                                            style: TextStyle(
+                                              color: Color.fromARGB(255, 22, 223, 29),
+                                              fontSize: 32,
+                                              fontWeight: FontWeight.bold
+                                            ),
+                                          ),
+                                          Text(
+                                            "t",
+                                            style: TextStyle(
+                                              color: Colors.red,
+                                              fontSize: 32,
+                                              fontWeight: FontWeight.bold
+                                            ),
+                                          ),
+                                          Text(
+                                            "r",
+                                            style: TextStyle(
+                                              color: Colors.orange,
+                                              fontSize: 32,
+                                              fontWeight: FontWeight.bold
+                                            ),
+                                          ),
+                                          Text(
+                                            "i",
+                                            style: TextStyle(
+                                              color: Colors.deepPurpleAccent,
+                                              fontSize: 32,
+                                              fontWeight: FontWeight.bold
+                                            ),
+                                          ),
+                                          Text(
+                                            "s",
+                                            style: TextStyle(
+                                              color: Color.fromARGB(255, 248, 93, 144),
+                                              fontSize: 32,
                                               fontWeight: FontWeight.bold
                                             ),
                                           ),
                                         ]   
-                                      ),                                                                                        
+                                      ),
+
                                     ],
                                   ),
                                 ),
@@ -319,6 +356,7 @@ class _HomePageState extends State<HomePage> {
                                     }
                                   ),
                                 ),
+                                
 
 
                                 Padding(
@@ -347,7 +385,26 @@ class _HomePageState extends State<HomePage> {
                                       )
                                     ],
                                   ),
-                                )  
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 20),
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                                    
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(255, 34, 32, 31),
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        color: Colors.red,
+                                        width: 2
+                                      )
+                                    ),
+                                    child: Text(
+                                      "Score - $score",
+                                      style: TextStyle(color: Colors.white,fontSize: 22),
+                                      ),
+                                  ),
+                                ),  
                                                            
                               ],
                             ),
