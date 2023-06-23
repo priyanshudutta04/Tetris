@@ -2,13 +2,14 @@
 
 
 import 'dart:async';
-
+import 'package:hive/hive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:tetris/widgets/boxes.dart';
 import 'package:tetris/widgets/drawer.dart';
 import 'dart:math';
 
+import '../utils/db.dart';
 import '../widgets/piece.dart';
 
 //2 * 2 list
@@ -35,13 +36,29 @@ class _HomePageState extends State<HomePage> {
   int col=15;
   int score=0;
 
+  int highscore=0;
+
   Piece currentPiece=Piece(type: Tetromino.TTT);
 
   bool over=false;
 
+  //reference the hive box
+  final highbox = Hive.box("HighScore_db");
+  HighScoreDB db = HighScoreDB();
+
   @override
   void initState() {
-    // TODO: implement initState
+
+    if (highbox.get("SCOREDB") == null){
+      db.createInitialData();
+      highscore=db.score;
+    }
+
+    else {
+      db.loadData();
+      highscore = db.score;
+    }
+    
     super.initState();
     //start game when app starts
     startGame();
@@ -91,7 +108,6 @@ class _HomePageState extends State<HomePage> {
       
       actions: [
         TextButton(onPressed: (){
-            score=0;
             Navigator.pop(context);
             resetGame();
           }, 
@@ -164,6 +180,13 @@ class _HomePageState extends State<HomePage> {
     }
   }
   void resetGame(){
+    setState(() {
+      if(score>highscore){
+        db.score=score;
+      }
+      
+    });
+     db.updateData();
     gameBoard=List.generate(
       col,
       (i) => List.generate(
@@ -172,6 +195,7 @@ class _HomePageState extends State<HomePage> {
       )
     );
     over=false;
+    score=0;
     newPiece();
     startGame();
   }
@@ -387,7 +411,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 20),
+                                  padding: const EdgeInsets.only(bottom: 20),
                                   child: Container(
                                     padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
                                     
@@ -400,7 +424,7 @@ class _HomePageState extends State<HomePage> {
                                       )
                                     ),
                                     child: Text(
-                                      "Score - $score",
+                                      "Score : $score",
                                       style: TextStyle(color: Colors.white,fontSize: 22),
                                       ),
                                   ),
