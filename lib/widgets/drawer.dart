@@ -7,7 +7,6 @@ import 'package:hive/hive.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../utils/db.dart';
-import '../utils/routes.dart';
 
 class DrawerPage extends StatefulWidget {
   
