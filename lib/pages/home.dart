@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, sort_child_properties_last
 
-
 import 'dart:async';
 import 'package:hive/hive.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +35,7 @@ class _HomePageState extends State<HomePage> {
   int col=15;
   int score=0;
 
-  int highscore=0;
+  int highscore=-1;
 
   Piece currentPiece=Piece(type: Tetromino.TTT);
 
@@ -133,7 +132,7 @@ class _HomePageState extends State<HomePage> {
         currow+=1;
       }
 
-      if( currow>14 || curcol<0|| curcol>= row){
+      if( currow>13 || curcol<0|| curcol>= row){
         return true;
 
       }
@@ -182,9 +181,9 @@ class _HomePageState extends State<HomePage> {
   void resetGame(){
     setState(() {
       if(score>highscore){
+        highscore=score;
         db.score=score;
       }
-      
     });
      db.updateData();
     gameBoard=List.generate(
@@ -226,7 +225,9 @@ class _HomePageState extends State<HomePage> {
       // Using Stack for two fold animation. dont Add Expand
       body: Stack(
         children: [
-          DrawerPage(),
+          DrawerPage(
+            high: highscore,
+          ),
 
           //Menu Animation
           TweenAnimationBuilder(
@@ -326,7 +327,7 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                           ),
                                           Text(
-                                            "s",
+                                            "x",
                                             style: TextStyle(
                                               color: Color.fromARGB(255, 248, 93, 144),
                                               fontSize: 32,

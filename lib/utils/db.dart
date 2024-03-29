@@ -9,7 +9,7 @@ class HighScoreDB{
   final highbox = Hive.box("HighScore_db");
   
   void createInitialData(){
-    score=0;
+    score==-1;
   }
 
   void loadData(){

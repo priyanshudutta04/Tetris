@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tetris/pages/home.dart';
 import 'package:tetris/utils/routes.dart';
 import 'package:tetris/widgets/drawer.dart';
@@ -20,6 +21,18 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+
+  @override
+  void initState() {
+    super.initState();
+
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarColor: Color.fromRGBO(27, 18, 18, 1), // Background color of the navigation bar
+      statusBarColor: Color.fromRGBO(27, 18, 18, 1), // Background color of the status bar
+    ));
+  }
+  
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -34,7 +47,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
         //creating routes for different pages in app
         "/": (context) => HomePage(), //main root
-        Myroutes.drawerRoute: (context) => DrawerPage(),
+        Myroutes.drawerRoute: (context) => DrawerPage(high: 0,),
       },
     );
   }
